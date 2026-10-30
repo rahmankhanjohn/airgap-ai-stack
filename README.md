@@ -1,5 +1,14 @@
 # airgap-ai-stack
 
+![Tests](https://github.com/rahmankhanjohn/airgap-ai-stack/actions/workflows/test.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Go 1.24+](https://img.shields.io/badge/go-1.24+-00ADD8.svg)
+![Dependencies: 0](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
+![Tests: 17](https://img.shields.io/badge/tests-17%20passing-brightgreen.svg)
+![GitHub stars](https://img.shields.io/github/stars/rahmankhanjohn/airgap-ai-stack?style=social)
+![Last commit](https://img.shields.io/github/last-commit/rahmankhanjohn/airgap-ai-stack)
+
+
 Run an open-weight AI model inside an enclave with no internet egress - and prove it.
 
 One Go binary packs models, eval suites, and runtime binaries into a checksummed
