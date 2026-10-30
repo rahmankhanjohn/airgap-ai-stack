@@ -24,11 +24,11 @@ jobs:
         run: go test ./... -count=1 -v
       - name: Build
         run: go build -o airgap ./cmd/airgap/
-      - name: Smoke: pack and verify the example bundle
+      - name: "Smoke - pack and verify the example bundle"
         run: |
           ./airgap pack --name ci-enclave --runtime llama-server --eval-suite evals/suite.json examples/bundle
           ./airgap verify examples/bundle
-      - name: Smoke: offline eval against a stub endpoint
+      - name: "Smoke - offline eval against a stub endpoint"
         run: |
           # the eval runner is exercised by unit tests against a stub server;
           # here we only assert the CLI handles a missing runtime gracefully
