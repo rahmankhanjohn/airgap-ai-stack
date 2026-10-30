@@ -1,0 +1,25 @@
+{
+  "name": "enclave-bundle",
+  "created": "2026-10-30T20:28:16.6360745Z",
+  "format_version": "0.1.0",
+  "tool_version": "0.1.0",
+  "runtime": {
+    "binary": "llama-server",
+    "listen_port": 8080,
+    "health_path": "/health"
+  },
+  "files": [
+    {
+      "path": "evals/suite.json",
+      "sha256": "bf2bff46a96ddb05f473d593d750c255125be06006bf11309d3d5f291ffe615a",
+      "bytes": 2152,
+      "role": "eval"
+    },
+    {
+      "path": "models/tinyllama-demo.gguf",
+      "sha256": "bffa613a61ce1ffb1bf36e7e4545b93e2d6b012e86a990ce0115c2bf83ad398d",
+      "bytes": 260,
+      "role": "model"
+    }
+  ]
+}

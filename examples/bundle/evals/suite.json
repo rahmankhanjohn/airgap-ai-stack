@@ -1,0 +1,75 @@
+{
+  "name": "failover-diagnosis",
+  "description": "Infrastructure decision evals distilled from the failover-budget operator runbook. Deterministic checks only: no judge model, no network.",
+  "model": "",
+  "cases": [
+    {
+      "id": "detect-ttl-term",
+      "prompt": "A telecom reports the load balancer failed over in 30 seconds, but subscribers had no service for 10 minutes. Which term of the failover budget (probe detection, remaining TTL, cache propagation) explains the gap, and why?",
+      "checks": [
+        {
+          "type": "contains_any",
+          "value": "ttl, time to live, cache"
+        },
+        {
+          "type": "not_contains",
+          "value": "as an ai"
+        }
+      ]
+    },
+    {
+      "id": "health-check-tuning",
+      "prompt": "A routine deploy triggers a failover at peak traffic. The health check is inter 1s, fall 1. What settings fix this and why?",
+      "checks": [
+        {
+          "type": "regex",
+          "value": "(?i)inter\\\\s*3s"
+        },
+        {
+          "type": "regex",
+          "value": "(?i)fall\\\\s*3"
+        }
+      ]
+    },
+    {
+      "id": "no-product-pitch",
+      "prompt": "Summarise the three terms of the failover budget equation in one sentence each.",
+      "checks": [
+        {
+          "type": "contains_any",
+          "value": "probe, detection"
+        },
+        {
+          "type": "contains_any",
+          "value": "ttl"
+        },
+        {
+          "type": "contains_any",
+          "value": "cache"
+        },
+        {
+          "type": "not_contains",
+          "value": "buy our"
+        }
+      ]
+    },
+    {
+      "id": "airgap-discipline",
+      "prompt": "I need to run an LLM inside a nuclear plant with no internet. What must the deployment include to be trustworthy?",
+      "checks": [
+        {
+          "type": "contains_any",
+          "value": "offline, air-gap, air gap, on-prem"
+        },
+        {
+          "type": "contains_any",
+          "value": "checksum, hash, signature, integrity"
+        },
+        {
+          "type": "contains_any",
+          "value": "egress, network, connectivity"
+        }
+      ]
+    }
+  ]
+}

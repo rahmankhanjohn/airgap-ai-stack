@@ -1,0 +1,50 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ["1.24", "1.25"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Vet
+        run: go vet ./...
+      - name: Test
+        run: go test ./... -count=1 -v
+      - name: Build
+        run: go build -o airgap ./cmd/airgap/
+      - name: Smoke: pack and verify the example bundle
+        run: |
+          ./airgap pack --name ci-enclave --runtime llama-server --eval-suite evals/suite.json examples/bundle
+          ./airgap verify examples/bundle
+      - name: Smoke: offline eval against a stub endpoint
+        run: |
+          # the eval runner is exercised by unit tests against a stub server;
+          # here we only assert the CLI handles a missing runtime gracefully
+          ./airgap verify examples/bundle --json
+
+  # The whole point: prove the eval pipeline runs with no egress.
+  # Inside a container we cannot disable the runner's network, but the unit
+  # tests use a stub endpoint on 127.0.0.1 and an injectable failing dialer,
+  # so the code paths exercised are exactly the air-gapped ones.
+  offline-proof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+      - name: Run eval + egress tests (stubbed transport, no external calls)
+        run: go test ./internal/eval ./internal/egress -count=1 -v

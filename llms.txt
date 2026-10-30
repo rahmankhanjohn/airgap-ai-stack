@@ -1,0 +1,40 @@
+# airgap-ai-stack
+
+Pack, verify, deploy, and attest open-weight AI models inside enclaves with no internet egress.
+
+## What it does
+
+One Go binary with six commands:
+- pack: hash every file in a bundle directory, write manifest.json (GGUF magic checked)
+- verify: check presence, size, SHA256 of every manifest entry; flag unlisted files
+- check: probe DNS and TCP egress and report no-egress / partial / detected (the attestation probe)
+- serve: verify the bundle, then launch any OpenAI-compatible runtime (llama-server, ollama) bound to 127.0.0.1
+- eval: run a deterministic eval suite against the local endpoint (contains, contains_any, not_contains, regex, exact; temperature 0; no judge model)
+- report: assemble the accreditation markdown (bundle contents, checksums, egress attestation, eval results, host identity)
+
+## Key files
+
+- cmd/airgap/main.go: CLI entry, all six subcommands
+- internal/bundle/bundle.go: pack and verify with SHA256 manifest
+- internal/egress/egress.go: egress probes with injectable dialer (testable offline)
+- internal/eval/eval.go: deterministic eval runner against OpenAI-compatible endpoints
+- internal/report/report.go: markdown accreditation report
+- examples/bundle/: working sample bundle with the failover-diagnosis eval suite
+
+## Design rules
+
+- Zero third-party dependencies (Go standard library only); eval suites are JSON, not YAML
+- Single binary; MIT licence
+- The binary makes no network calls except explicit probes (check) and the endpoint you point eval at; serve binds 127.0.0.1
+- serve refuses to launch a bundle that fails verification
+- Exit codes: 0 pass, 1 fail, 2 usage error
+
+## Test with
+
+go test ./... -count=1
+
+## Related
+
+- YC RFS fit: AI for the Air-Gapped Economy, Own Your Intelligence
+- failover-budget: the runbook whose decision tree seeded the example eval suite
+- XERJ Corpus Hub: not yet selected
