@@ -2,7 +2,7 @@
 
 ![Tests](https://github.com/rahmankhanjohn/airgap-ai-stack/actions/workflows/test.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/rahmankhanjohn/badge.svg)
+[![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/rahmankhanjohn/badge.svg)](https://hub.xerj.org/contributors/rahmankhanjohn)
 [![Setup manual](https://gitmanual.com/rahmankhanjohn/airgap-ai-stack/badge.svg)](https://gitmanual.com/rahmankhanjohn/airgap-ai-stack)
 ![Go 1.24+](https://img.shields.io/badge/go-1.24+-00ADD8.svg)
 ![Dependencies: 0](https://img.shields.io/badge/dependencies-0-brightgreen.svg)
